@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package model;
+
+message DataMeta {
+    int32 version = 1;
+    bytes id = 2;
+    string namespace = 3;
+    string table = 4;
+    bytes key = 5;
+    int32 ring = 6;
+}
+
+message DataContent {
+    bool deleted = 1;
+    bytes content = 2;
+}
+
+message DataBody {
+    bytes id = 1;
+    int32 ring = 2;
+    string namespace = 3;
+    string table = 4;
+    int32 partitionId = 5;
+    int32 partitionIndex = 6;
+    int32 version = 7;
+    bytes content = 8;
+}

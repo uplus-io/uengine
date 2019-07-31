@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package model;
+
+message Description {
+    int32 namespace = 1;
+    int32 table = 2;
+}
+
+message Repository {
+    int32 DataCenter = 1;
+    int32 Area = 2;
+    int32 Rack = 3;
+}
+
+message Partition {
+    int32 version = 1; //分区存储算法版本
+    int32 id = 2; //分区集群id
+    int32 index = 3; //分区在所在节点的索引值
+}
+
+message Storage {
+    repeated Partition partitions = 1;
+}
+
+message Namespace {
+    Description desc = 1;
+    int32 id = 2;
+    string name = 3;
+}
+
+message Table {
+    Description desc = 1;
+    int32 id = 2;
+    string name = 3;
+}
