@@ -138,7 +138,10 @@ func (p *Engine) Parts() []model.Partition {
 	partitions := make([]model.Partition, 0)
 	for _, store := range p.partitions {
 		partition := store.Part()
-		partitions = append(partitions, *partition)
+		//todo:// 分区为空时，需考虑是否自动创建分区
+		if partition != nil {
+			partitions = append(partitions, *partition)
+		}
 	}
 	return partitions
 }

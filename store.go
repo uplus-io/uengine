@@ -10,6 +10,7 @@ import (
 	"github.com/uplus-io/ugo/hash"
 	"github.com/uplus-io/ugo/utils"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -64,6 +65,7 @@ type Store interface {
 }
 
 func NewStore(cfg StoreConfig) (s Store) {
+	checkDir(cfg)
 	var err error
 	if STORE_TYPE_BOLT == cfg.Type {
 		//s, err = OpenStoreBolt(cfg)
@@ -76,6 +78,16 @@ func NewStore(cfg StoreConfig) (s Store) {
 		log.Fatal(err)
 	}
 	return
+}
+
+func checkDir(config StoreConfig) {
+	_, err := os.Stat(config.Path)
+	if err != nil && os.IsNotExist(err) {
+		mkdirError := os.MkdirAll(config.Path, 0700)
+		if mkdirError != nil {
+			panic(fmt.Sprintf("store path[%s] not exist,create directiory error:[%v]", config.Path, mkdirError))
+		}
+	}
 }
 
 type Identity struct {
